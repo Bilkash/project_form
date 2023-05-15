@@ -1,19 +1,11 @@
 import { createGate } from "effector-react";
 import { createDomain } from "effector";
 
+import { ProjectData } from "@/types";
+
 export const Gate = createGate();
 
 const domain = createDomain("project_form");
-
-type ProjectData = {
-  name: string;
-  url: string;
-  category: string;
-  goal: string;
-  workersCount: number;
-  productLaunch: string;
-  email: string;
-}
 
 const INIT_DATA: ProjectData = {
 	name: "",

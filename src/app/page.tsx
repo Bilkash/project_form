@@ -5,8 +5,9 @@ import { useStore } from "effector-react";
 import { ProgressBar, RadioSelect, TagsChoice, TextInput, Button } from "@/components";
 import { $currentFormScreen, $project, dataChanged } from "@/effector";
 import NumberInput from "@/components/number-input";
+import { ProjectData } from "@/types";
 
-import { Wrapper, Title, HighLightText, ButtonWrapper } from "./page.styled";
+import { Wrapper, Title, HighLightText, ButtonWrapper, FormWrapper } from "./page.styled";
 
 const goals = [
 	"Grow My Community",
@@ -24,13 +25,27 @@ export default function Home() {
 	const currentFormScreen = useStore($currentFormScreen);
 	const project = useStore($project);
 
-	const handleGoals = (str) => {
+	const handleGoals = (str: string) => {
 		dataChanged({ goal: str });
 	};
 
-	const handleLaunchType = (str) => {
+	const handleLaunchType = (str: string) => {
 		dataChanged({ productLaunch: str });
 	};
+
+	const handleChangeTextInput = (str: string, name: keyof ProjectData) => {
+		dataChanged({ [name]: str });
+	};
+
+	const handleChooseTag = (str: string) => {
+		dataChanged({ category: str });
+	};
+
+	const handleChangeNumber = (num: number) => {
+		dataChanged({ workersCount: num });
+	};
+
+	console.log(project);
 
 	const renderFormScreen = () => {
 		switch (currentFormScreen) {
@@ -45,18 +60,20 @@ export default function Home() {
 				<TextInput
 					placeholder="Awesome NFT Punch"
 					title="Project Name (It can be changed later)"
-					value=""
-					onChange={() => console.log("AAAA")}
+					value={project.name}
+					name={"name"}
+					onChange={handleChangeTextInput}
 				/>
 
 				<TextInput
 					placeholder="Alphaguilty.io/awesomenftpunch"
 					title="Project URL (It cannot be changed after creation)"
-					value=""
-					onChange={() => console.log("AAAA")}
+					value={project.url}
+					name={"url"}
+					onChange={handleChangeTextInput}
 				/>
 
-				<TagsChoice/>
+				<TagsChoice handleClick={handleChooseTag}/>
 
 				<Button text={"Add Project"}/>
 			</>
@@ -90,7 +107,7 @@ export default function Home() {
 					<Title>How many full-time workers on project?</Title>
 				</div>
 
-				<NumberInput value={project.workersCount}/>
+				<NumberInput value={project.workersCount} handleChange={handleChangeNumber}/>
 
 				<Title>Are you pre or post product launch?</Title>
 
@@ -104,8 +121,9 @@ export default function Home() {
 
 				<TextInput
 					placeholder="awesomenft@gmail.com"
-					value=""
-					onChange={() => console.log("AAAA")}
+					value={project.email}
+					name={"email"}
+					onChange={handleChangeTextInput}
 				/>
 
 				<ButtonWrapper>
@@ -122,7 +140,9 @@ export default function Home() {
 		<Wrapper>
 			<ProgressBar/>
 
-			{renderFormScreen()}
+			<FormWrapper>
+				{renderFormScreen()}
+			</FormWrapper>
 		</Wrapper>
 	);
 }

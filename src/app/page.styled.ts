@@ -1,11 +1,29 @@
 import styled from "styled-components";
 
+import { mediaQueries } from "@/confifs/mediaQueries";
+
 export const Wrapper = styled.main`
   display: flex;
+  ${mediaQueries("md")`
+     flex-direction: row;
+      padding: 0;
+      gap: 0;
+  `};
   flex-direction: column;
   gap: 25px;
   min-height: 100vh;
   padding: 70px 15px;
+`;
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  ${mediaQueries("md")`
+    width: 60%;
+    gap: 30px;
+    padding: 60px 100px;
+  `};
 `;
 
 export const Title = styled.div`

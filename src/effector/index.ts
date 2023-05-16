@@ -7,7 +7,7 @@ export const Gate = createGate();
 
 const domain = createDomain("project_form");
 
-const INIT_DATA: ProjectData = {
+export const INIT_DATA: ProjectData = {
 	name: "",
 	url: "",
 	category: "",

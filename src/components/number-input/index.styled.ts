@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { mediaQueries } from "@/confifs/mediaQueries";
+import { mediaQueries } from "@/configs/mediaQueries";
 
 export const Wrapper = styled.div`
   ${mediaQueries("md")`

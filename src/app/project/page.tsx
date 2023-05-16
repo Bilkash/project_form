@@ -4,7 +4,7 @@ import { useStore } from "effector-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { $project, cleanData, formScreenChanged } from "@/effector";
+import { $project, cleanData, dataChanged, formScreenChanged, INIT_DATA } from "@/effector";
 import { Title } from "@/components/shared";
 import { Button } from "@/components";
 
@@ -13,6 +13,12 @@ import { Wrapper, BottomGradientBackground, BottomGradient, ProjectWrapper } fro
 export default function Project() {
 	const project = useStore($project);
 	const router = useRouter();
+
+	const handleRefresh = () => {
+		dataChanged(INIT_DATA);
+		router.push("/");
+		formScreenChanged(1);
+	};
 
 	return (
 		<Wrapper>
@@ -42,11 +48,7 @@ export default function Project() {
 					Contact Email: {project.email}
 				</div>
 
-				<Button text={"Refresh"} handleClick={() => {
-					cleanData();
-					router.push("/");
-					formScreenChanged(1);
-				}}/>
+				<Button text={"Refresh"} handleClick={handleRefresh}/>
 			</ProjectWrapper>
 
 			<BottomGradientBackground/>

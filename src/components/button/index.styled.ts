@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { mediaQueries } from "@/confifs/mediaQueries";
+import { mediaQueries } from "@/configs/mediaQueries";
 
 export const ButtonBox = styled.div`
 	display: flex;
@@ -26,9 +26,9 @@ export const DarkButtonBox = styled.div`
   `};
 `;
 
-export const ButtonText = styled.div`
+export const ButtonText = styled("div")<{dark?: boolean}>`
   color: #101313;
-  color: ${props => props["dark"] ? "#FAFAFA" : "#101313"};
+  color: ${props => props.dark ? "#FAFAFA" : "#101313"};
   font-size: 16px;
   font-style: normal;
 `;

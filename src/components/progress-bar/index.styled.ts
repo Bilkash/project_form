@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { mediaQueries } from "@/confifs/mediaQueries";
+import { mediaQueries } from "@/configs/mediaQueries";
 
 export const Wrapper = styled.div`
   ${mediaQueries("md")`
@@ -30,7 +30,7 @@ export const DesktopLineWrapper = styled.div`
   position: relative;
 `;
 
-export const Circle = styled.div`
+export const Circle = styled("div")<{position: number; currentFormScreen: number}>`
   width: 8px;
   height: 8px;
   background: ${(props) => {
@@ -56,7 +56,7 @@ export const CircleWrapper = styled.div`
   align-items: center;
 `;
 
-export const CircleText = styled.div`
+export const CircleText = styled("div")<{position: number; currentFormScreen: number}>`
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -73,7 +73,7 @@ export const CircleText = styled.div`
 	}};
 `;
 
-export const Line = styled.div`
+export const Line = styled("div")<{position: number; currentFormScreen: number}>`
   ${mediaQueries("md")`
 		 width: 1px;
   height: 40px;
@@ -117,7 +117,6 @@ export const BottomGradient = styled.div`
   height: 156px;
   left: -5px;
   bottom: -120px;
-
   background: linear-gradient(280.87deg, #87F696 20.45%, #00FFFF 41.25%, #9C16EF 72.03%, #4200FF 94.43%);
   opacity: 0.5;
   filter: blur(32.5px);

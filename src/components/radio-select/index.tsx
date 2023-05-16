@@ -1,8 +1,14 @@
 import React from "react";
 
-import { Wrapper, Option, OptionText, RadioInner, RadioOuter } from "./index.styles";
+import { Wrapper, Option, OptionText, RadioInner, RadioOuter } from "./index.styled";
 
-export default function RadioSelect({ options, handleClick, value }) {
+type RadioSelectTypes = {
+	options: string[];
+	handleClick: (str: string) => void;
+	value: string;
+}
+
+export default function RadioSelect({ options, handleClick, value }: RadioSelectTypes) {
 	return (
 		<Wrapper>
 			{options.map(it => (

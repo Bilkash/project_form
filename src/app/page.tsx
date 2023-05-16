@@ -1,13 +1,16 @@
 "use client";
 
 import { useStore } from "effector-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
-import { ProgressBar, RadioSelect, TagsChoice, TextInput, Button } from "@/components";
-import { $currentFormScreen, $project, dataChanged } from "@/effector";
-import NumberInput from "@/components/number-input";
+import { ProgressBar, RadioSelect, TagsChoice, TextInput, Button, NumberInput } from "@/components";
+import { Title } from "@/components/shared";
+import { $currentFormScreen, $project, dataChanged, formScreenChanged } from "@/effector";
 import { ProjectData } from "@/types";
 
-import { Wrapper, Title, HighLightText, ButtonWrapper, FormWrapper } from "./page.styled";
+import { Wrapper, HighLightText, ButtonWrapper, FormWrapper } from "./page.styled";
 
 const goals = [
 	"Grow My Community",
@@ -24,6 +27,7 @@ const launchType = [
 export default function Home() {
 	const currentFormScreen = useStore($currentFormScreen);
 	const project = useStore($project);
+	const router = useRouter();
 
 	const handleGoals = (str: string) => {
 		dataChanged({ goal: str });
@@ -45,7 +49,38 @@ export default function Home() {
 		dataChanged({ workersCount: num });
 	};
 
-	console.log(project);
+	const showErrorSnackbar = () => {
+		toast.error("Please fill all field.",  {
+			position: toast.POSITION.TOP_CENTER,
+			autoClose: 2000,
+			theme: "dark"
+		});
+	};
+
+	const handleFirstStepSubmit = () => {
+		if (!project.name || !project.url || !project.category) {
+			showErrorSnackbar();
+		} else {
+			formScreenChanged(2);
+		}
+	};
+
+	const handleSecondStepSubmit = () => {
+		if (!project.goal) {
+			showErrorSnackbar();
+		} else {
+			formScreenChanged(3);
+		}
+	};
+
+	const handleThirdStepSubmit = () => {
+		if (!project.email || !project.productLaunch || !project.workersCount) {
+			showErrorSnackbar();
+		} else {
+			router.push("/project");
+		}
+	};
+
 
 	const renderFormScreen = () => {
 		switch (currentFormScreen) {
@@ -75,7 +110,7 @@ export default function Home() {
 
 				<TagsChoice handleClick={handleChooseTag}/>
 
-				<Button text={"Add Project"}/>
+				<Button handleClick={handleFirstStepSubmit} text={"Add Project"}/>
 			</>
 		);
 		case 2: return (
@@ -93,9 +128,9 @@ export default function Home() {
 				/>
 
 				<ButtonWrapper>
-					<Button dark text={"Back"}/>
+					<Button handleClick={() => formScreenChanged(1)} dark text={"Back"}/>
 
-					<Button text={"Continue"}/>
+					<Button handleClick={handleSecondStepSubmit} text={"Continue"}/>
 				</ButtonWrapper>
 			</>
 		);
@@ -127,9 +162,9 @@ export default function Home() {
 				/>
 
 				<ButtonWrapper>
-					<Button dark text={"Back"}/>
+					<Button handleClick={() => formScreenChanged(2)} dark text={"Back"}/>
 
-					<Button text={"Create Project"}/>
+					<Button handleClick={handleThirdStepSubmit} text={"Create Project"}/>
 				</ButtonWrapper>
 			</>
 		);
@@ -137,12 +172,16 @@ export default function Home() {
 	};
 
 	return (
-		<Wrapper>
-			<ProgressBar/>
+		<>
+			<Wrapper>
+				<ProgressBar/>
 
-			<FormWrapper>
-				{renderFormScreen()}
-			</FormWrapper>
-		</Wrapper>
+				<FormWrapper>
+					{renderFormScreen()}
+				</FormWrapper>
+			</Wrapper>
+
+			<ToastContainer/>
+		</>
 	);
 }

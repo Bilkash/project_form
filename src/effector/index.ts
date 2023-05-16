@@ -18,6 +18,7 @@ const INIT_DATA: ProjectData = {
 };
 
 export const dataChanged = domain.event<Partial<ProjectData>>();
+export const cleanData = domain.event<Partial<ProjectData>>();
 export const formScreenChanged = domain.event<number>();
 
 export const $project = domain.store<ProjectData>(INIT_DATA);
@@ -27,6 +28,7 @@ $project.on(dataChanged, (state, newData) => ({
 	...state,
 	...newData,
 }));
+$project.on(cleanData, () => ({ ...INIT_DATA }));
 $currentFormScreen.on(formScreenChanged, (_, newFormScreen) => newFormScreen);
 
 

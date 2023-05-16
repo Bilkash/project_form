@@ -13,6 +13,8 @@ export const Wrapper = styled.main`
   gap: 25px;
   min-height: 100vh;
   padding: 70px 15px;
+  overflow: hidden;
+  background-color: #1E1E1E;
 `;
 
 export const FormWrapper = styled.div`
@@ -24,14 +26,6 @@ export const FormWrapper = styled.div`
     gap: 30px;
     padding: 60px 100px;
   `};
-`;
-
-export const Title = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 38px;
-  color: #FFFFFF;
 `;
 
 export const HighLightText = styled.div`
@@ -47,4 +41,7 @@ export const ButtonWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 0px 15px;
+  ${mediaQueries("md")`
+     grid-template-columns: 120px 1fr;
+  `};
 `;
